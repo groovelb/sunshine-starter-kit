@@ -12,6 +12,10 @@ Claude and Codex share the same pipeline state, validators, finalizer, fixed Rea
 Hard requirements:
 
 - run only one Stage at a time;
+- Stage 1: ≤4 core sources, ego-browser preferred (suggest install if missing, fall back if declined);
+- all Stages: omit sections without evidence — no blank fields, no placeholders;
+- all Stages: no duplicate images — check `asset-registry.json` and `visual-corpus.csv` before saving;
+- Stage 2: extract 3–5 core insights before drafting, thread them through all sections;
 - require `pnpm finalize-brand-report -- <package>` before every checkpoint;
 - treat the finalizer as the sole validation entrypoint and do not add preflight or post-pass validation;
 - re-finalize the accepted review record before advancing;

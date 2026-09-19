@@ -12,7 +12,10 @@ Claude and Codex share the same canonical package, validators, finalizer, React 
 Hard requirements:
 
 - require accepted Stage 1 JSON and current Storybook registration;
-- produce exactly eight fixed React sections and two registered anchor images;
+- before drafting sections, extract 3–5 razor-sharp core insights from Stage 1 anatomy; each insight is a one-sentence causal claim ("The brand does X because Y, which creates Z");
+- sections must weave insights into a coherent narrative — no independent/mechanical filling;
+- omit sections without supporting direction — no blank fields or placeholders;
+- no duplicate images — check `asset-registry.json` and Stage 1 `visual-corpus.csv` before saving;
 - canonical output is `outputs/extended-brand-anatomy.json`, `asset-registry.json`, and `stage-review.json`;
 - final delivery runs `pnpm finalize-brand-report -- <package>`;
 - the finalizer is the only validation command; do not run standalone validators or a post-pass audit;

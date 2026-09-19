@@ -18,6 +18,14 @@ Read [the pipeline specification](../../../docs/brand-research-pipeline-spec.md)
 - The root coordinator is the only canonical and pipeline-state writer in routed parallel mode. Workers write only their assigned `.work/<job-id>/` directory and never call router scripts.
 - Never use Playwright, Chrome MCP, or browser automation unless the user explicitly requests it.
 
+### Lean pipeline rules (pipeline spec §2.1)
+
+- **≤4 core sources** for Stage 1. Do not extend the source count across Stages.
+- **ego-browser preferred** for evidence collection. If unavailable, suggest install; if declined, fall back to web search.
+- **No blank fields** across all Stages. Omit sections without evidence rather than leaving them empty.
+- **No duplicate images** across all Stages. Check `asset-registry.json` and `visual-corpus.csv` before saving any image.
+- **Insight-first Stage 2**. Before drafting sections, extract 3–5 core insights from Stage 1 and thread them through all subsequent work.
+
 ## Initialize
 
 ```bash

@@ -11,7 +11,10 @@ Claude and Codex share the same canonical package, timer, validators, finalizer,
 
 Hard requirements:
 
-- rapid mode preserves all 18 fixed React sections and stops within ten minutes;
+- rapid mode uses ≤4 core sources, omits sections without evidence, and stops within ten minutes;
+- use ego-browser as primary collection tool; if not installed, suggest `npm i -g @anthropic-ai/ego-browser` and fall back to web search if declined;
+- no blank fields — omit sections, claims, or token slots that lack supporting evidence;
+- no duplicate images — check `visual-corpus.csv` before saving;
 - canonical output is `outputs/source-brand-analysis.json` plus `stage-review.json` and local evidence;
 - final delivery runs `pnpm finalize-brand-report -- <package>` from the starter-kit root;
 - the finalizer is the only validation command; do not run a standalone validator or post-pass audit;

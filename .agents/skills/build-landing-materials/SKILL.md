@@ -16,6 +16,12 @@ Create production-ready copy and registered product renders for a later landing-
 - Never create an `outputs/*.html` report, coded page, or component system.
 - Never use Playwright, Chrome MCP, or browser automation unless the user explicitly requests it.
 
+### Lean landing rules (pipeline spec §2.1)
+
+- **No blank fields**. Omit any section or element that has no supporting material. Do not produce placeholders.
+- **No duplicate images**. Before generating or saving a render, check `asset-registry.json` from Stages 1–2. Reuse existing registered paths when the same visual is needed; never re-download or duplicate.
+- **Insight continuity**. Landing copy must build on the core insights extracted in Stage 2. Each section's narrative connects back to those insights rather than introducing disconnected claims.
+
 ## Initialize
 
 ```bash

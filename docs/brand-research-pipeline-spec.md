@@ -26,14 +26,22 @@ The package JSON owns content. React owns presentation. Generated Storybook stor
 3. `asset-registry.json` is required for Stage 2 and Stage 3.
 4. `outputs/*.html`, brand-specific HTML/CSS, HTML renderer scripts, and HTML validation are forbidden.
 5. Every report is normalized through `src/utils/brand-reports` and rendered only by `BrandReportDocument`.
-6. Every Stage has an exact ordered section-ID contract. Missing, extra, duplicated, or reordered sections fail registration.
-7. Every section exposes one non-empty `insight` and a `blocks` array.
+6. Every Stage has an exact ordered section-ID contract. Sections without collected data are omitted entirely rather than left blank; `insight` is required only for included sections. Extra, duplicated, or reordered sections fail registration.
+7. Every included section exposes one non-empty `insight` and a `blocks` array.
 8. Registration is not an optional delivery step. A Stage is deliverable only after `finalize-brand-report` validates, registers, and checks the package.
 9. Generated files under `src/stories/brand-reports/generated/` and copied packages under `public/brand-reports/` are CLI-owned.
 10. Pipeline advancement checks the finalized registration receipt and re-registers the accepted review record with the same report ID before changing Stage state. It does not rerun the Stage validator.
 11. Stage 1 and Stage 2 token sections use the shared color-swatch and typography-hierarchy blocks. Linked research fonts are document-only and never modify the starter-kit theme, global styles, or product tokens.
 12. Stage 1 and Stage 2 verbal sections use one shared five-tier hierarchy: foundation, strategic definition, core verbal platform, expression, and activation/proof. Core values and the audience-facing brand message must appear above USP, headline, and CTA copy.
 13. A routed parallel Stage uses the versioned fixed job plan. The root coordinator alone writes pipeline state and canonical files; workers write only their assigned `.work/<job-id>/` directory and return the fixed result contract.
+
+### 2.1 Lean research rules
+
+14. **Source cap**: Stage 1 uses at most 4 core sources (e.g. official site, brand guidelines PDF, key product page, social presence). Do not chase additional sources once 4 are collected; record gaps instead.
+15. **Collection tool priority**: Use `ego-browser` as the primary evidence-collection tool. If ego-browser is not installed, suggest installation (`npm i -g @anthropic-ai/ego-browser`) and proceed only after the user accepts. If the user declines, fall back to web search and direct URL fetching.
+16. **No blank fields**: When a brand element (section, claim, token, or asset slot) has no supporting evidence, omit it entirely from the canonical JSON and report. Never produce placeholder text, `TBD`, `N/A`, or empty arrays for unsupported elements.
+17. **No duplicate images**: Each local evidence image and generated asset must be unique across all Stages. Before saving a new image, check `asset-registry.json` and existing `visual-corpus.csv` entries. Reuse the registered path when the same visual is needed in a later Stage; do not copy or re-download it.
+18. **Insight-first brand transfer**: Stage 2 must extract 3–5 razor-sharp core insights from the accepted Stage 1 anatomy before any section drafting. Each insight is a one-sentence causal claim ("The brand does X because Y, which creates Z"). The section drafts then weave these insights into a coherent narrative rather than filling sections independently.
 
 ## 3. Stage report structures
 
@@ -100,24 +108,24 @@ Stage 3 boundaries remain canonical data and render inside `product-assets-and-m
 
 ## 4. Ten-minute Stage 1 contract
 
-The default research mode is `rapid`. It preserves the complete Stage 1 report structure while limiting evidence volume.
+The default research mode is `rapid`. It uses at most 4 core sources and omits sections without evidence.
 
 | Budget | Limit |
 | --- | ---: |
 | Scope lock and timer start | 1 minute |
-| Evidence search and capture | 5 minutes |
+| Evidence collection (ego-browser preferred) | 5 minutes |
 | Anatomy and grammar synthesis | 2 minutes |
 | Export, finalize, and registration check | 2 minutes |
 | Hard elapsed limit | 10 minutes |
 
-Rapid minimums:
+Rapid targets (not minimums — skip what the sources don't provide):
 
-- 4 structural sources, including 3 primary sources;
-- 8 direct local visuals across at least 4 applicable layers;
-- 8 material claims;
-- 4 causal grammar rules, each backed by at least 2 evidence items.
+- ≤4 core sources total (official site, brand PDF, key product page, social);
+- representative local visuals from collected sources only — no quantity floor;
+- material claims backed by collected evidence — no quantity floor;
+- 3–5 causal grammar rules distilled from what was found.
 
-Coverage gaps do not extend the timer. Record them under `unresolved_gaps` and continue to finalization. Repeated examples do not count as new coverage.
+Coverage gaps do not extend the timer or source count. Record them under `unresolved_gaps` and continue to finalization. Repeated or duplicate images do not count as new coverage and must not be saved.
 
 An expanded study is permitted only when the user explicitly requests deeper research. It must record that request and does not claim compliance with the ten-minute rapid SLA.
 

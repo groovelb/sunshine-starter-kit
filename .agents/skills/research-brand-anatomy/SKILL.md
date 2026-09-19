@@ -17,6 +17,13 @@ Produce one evidence-backed source-brand model, finalize it in Storybook, and st
 - Synthesize the fixed verbal hierarchy from evidence already collected: purpose, essence, positioning, promise, core values, brand message, voice, and activation/proof. Use explicit gaps instead of extending the rapid research window.
 - Never use Playwright, Chrome MCP, or browser automation unless the user explicitly requests it.
 
+### Lean research rules (pipeline spec §2.1)
+
+- **≤4 core sources**. Pick the highest-signal pages: official homepage, brand guide/about, hero product page, and one social or press source. Stop collecting once you have 4.
+- **ego-browser first**. Check `which ego-browser`. If installed, use it as the primary collection tool for navigating brand sites and capturing evidence. If not installed, ask the user: "ego-browser를 설치하면 브랜드 사이트를 직접 탐색해 더 정확한 자료를 모을 수 있습니다. `npm i -g @anthropic-ai/ego-browser`로 설치할까요?" If declined, fall back to web search and `fetch`.
+- **No blank fields**. Omit any section, claim, or token slot that has no supporting evidence. Do not produce `TBD`, `N/A`, placeholder text, or empty arrays.
+- **No duplicate images**. Before saving a visual, check if the same image (by URL or visual content) already exists in `visual-corpus.csv`. Skip duplicates.
+
 ## Initialize and start the timer
 
 ```bash
@@ -40,12 +47,12 @@ Required package artifacts:
 
 ## Research depth
 
-Use `rapid` unless the user explicitly requests a deeper study. Rapid mode preserves the complete report structure and changes only evidence volume.
+Use `rapid` unless the user explicitly requests a deeper study. Rapid mode caps sources at 4 and omits sections without evidence.
 
-| Mode | Structural evidence | Primary | Direct local visuals | Core claims | Grammar | Time |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| rapid | 4+ | 3+ | 8+ | 8+ | 4–6 | 10 minutes maximum |
-| expanded | 12+ | 8+ | 40–60 | 32+ | 5–8 | explicit user exception |
+| Mode | Core sources | Local visuals | Grammar rules | Time |
+| --- | ---: | ---: | ---: | ---: |
+| rapid | ≤4 | from collected sources only | 3–5 | 10 minutes maximum |
+| expanded | ≤8 | 40–60 | 5–8 | explicit user exception |
 
 Expanded mode requires the user's explicit request in `expanded_depth_rationale` and does not claim the rapid SLA.
 
@@ -59,13 +66,13 @@ For a routed pipeline, the root now runs `plan_stage_jobs.py` and dispatches the
 
 ### Minute 1–6 — Evidence
 
-Lead with current first-party evidence. Capture four structural sources and eight representative local visuals across at least four applicable layers. Preserve source URL, capture date, credit, rights note, local path, and hash. Stop collecting when a rule is represented; repeated examples do not extend the run.
+Lead with current first-party evidence using ego-browser (preferred) or web search. Collect at most 4 core sources — stop when you have them. Save representative local visuals from those sources only; do not hunt for additional image sources. Preserve source URL, capture date, credit, rights note, local path, and hash. No duplicate images.
 
-Register one official masterbrand logo and its verified identity-color field. Keep identity, key visual, brand mood, photography, product representation, and product-native language separate.
+Register one official masterbrand logo and its verified identity-color field. Keep identity, key visual, brand mood, photography, product representation, and product-native language separate. If a layer has no evidence from the 4 sources, omit it entirely.
 
 ### Minute 6–8 — Anatomy and grammar
 
-Use [the anatomy template](assets/source-brand-anatomy.md). Write the complete fixed report structure with concise sections, eight material claims, and four to six causal grammar rules. Every material claim needs evidence, confidence, an alternative, and scope or exception. Missing coverage becomes an explicit unresolved gap.
+Use [the anatomy template](assets/source-brand-anatomy.md). Write only sections that have supporting evidence — omit empty sections entirely. Distill 3–5 causal grammar rules from what was found. Each material claim needs evidence, confidence, an alternative, and scope or exception. Missing coverage becomes an explicit unresolved gap but does not create a blank section.
 
 At minute 8 run:
 

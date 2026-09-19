@@ -12,7 +12,9 @@ Claude and Codex share the same canonical package, validators, finalizer, React 
 Hard requirements:
 
 - require accepted Stage 2 JSON and current Storybook registration;
-- produce exactly six fixed React sections and registered renders covering the lineup;
+- omit sections without supporting material — no blank fields or placeholders;
+- no duplicate images — check `asset-registry.json` from Stages 1–2 before saving any render;
+- landing copy must build on the core insights extracted in Stage 2 — maintain narrative continuity;
 - canonical output is `outputs/landing-materials.json`, `asset-registry.json`, and `stage-review.json`;
 - final delivery runs `pnpm finalize-brand-report -- <package>`;
 - the finalizer is the only validation command; do not run a standalone validator or post-pass audit;
